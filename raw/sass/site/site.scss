@@ -1,0 +1,13 @@
+
+body,
+input,
+textarea,
+button {
+	@include font-size( theta );
+	font-family: $font-primary;
+}
+
+body {
+	color: $colour-primary;
+	line-height: 1.4;
+}

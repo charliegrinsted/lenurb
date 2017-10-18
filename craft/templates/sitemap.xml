@@ -1,0 +1,56 @@
+{%- macro siteMapItem( url, last_modified, change_frequency, priority ) -%}
+	<url>
+		<loc>{{ url }}</loc>
+		{% if last_modified %}<lastmod>{{ last_modified }}</lastmod>{% endif %}
+		<changefreq>{{ change_frequency }}</changefreq>
+		<priority>{{ priority }}</priority>
+	</url>
+{%- endmacro -%}
+{%- from _self import siteMapItem -%}
+
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+	{#- This is the homepage sitemap entry. -#}
+	{{- siteMapItem( siteUrl, null, 'daily', 1 ) -}}
+
+
+	{#- This array contains all of the site's page URLs (except the homepage, and individual entry pages). -#}
+	{%- set page_urls = [
+		'projects',
+		'projects/past',
+		'about',
+		'about/people',
+		'news',
+		'legal/terms',
+		'legal/privacy',
+		'legal/cookies'
+	] -%}
+
+	{%- for page_url in page_urls -%}
+		{{- siteMapItem( url( page_url ), null, 'weekly', 0.9 ) -}}
+	{%- endfor -%}
+
+
+	{#- These arrays ARE NOT for URLs. They contain the handles of sections and category groups whose entries have entry.url defined. -#}
+	{#- Each (live) entry in these sections/groups will be spat out into the sitemap. -#}
+	{%- set sections_with_entries_with_urls = [
+		'projects',
+		'news'
+	] -%}
+
+	{%- set category_groups_with_urls = [
+		'projectTypes',
+		'newsTopics'
+	] -%}
+
+	{%- for entry in craft.entries.section( sections_with_entries_with_urls ).limit( null ) -%}
+		{{- siteMapItem( entry.url, entry.dateUpdated.w3c, 'weekly', 0.8 ) -}}
+	{%- endfor -%}
+
+	{%- for category in craft.categories.group( category_groups_with_urls ).limit( null ) -%}
+		{{- siteMapItem( category.url, category.dateUpdated.w3c, 'weekly', 0.8 ) -}}
+	{%- endfor -%}
+
+</urlset>

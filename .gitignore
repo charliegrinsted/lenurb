@@ -1,0 +1,13 @@
+.DS_Store
+*.log
+
+/.env.php
+
+/craft/app/*
+/craft/storage/*
+!/craft/app/Info.php
+
+/public_html/assets/
+/public_html/uploads/**/**
+
+/node_modules/

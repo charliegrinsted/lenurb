@@ -1,0 +1,14 @@
+
+.container {
+	max-width: $container-max-width;
+	margin: 0 auto;
+	padding: 0 $container-side-padding;
+	@include media( c ) {
+		padding-left: $container-side-padding--mobile;
+		padding-right: $container-side-padding--mobile;
+	}
+}
+
+.container--full-bleed {
+	padding: 0;
+}

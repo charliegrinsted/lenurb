@@ -1,0 +1,34 @@
+{
+	"name": "ten4-framework",
+	"version": "1.0.0",
+	"private": true,
+	"author": "Ten4 Design",
+	"config": {
+		"production": false,
+		"lint": true,
+		"templates_dir": "app/templates/,craft/templates/",
+		"reload_delay_ms": 300
+	},
+	"scripts": {
+		"build": "./process.sh",
+		"purge": "./process.sh purge",
+		"build:js": "./process.sh js",
+		"build:css": "./process.sh css",
+		"build:img": "./process.sh img",
+		"build:fonts": "./process.sh fonts",
+		"watch": "chokidar 'raw/js/**/*' -c './process.sh js' --silent & chokidar 'raw/sass/**/*.scss' -c './process.sh css' --silent & chokidar 'raw/img/**/*' -c './process.sh img' --silent & chokidar 'raw/fonts/**/*' -c './process.sh fonts' --silent",
+		"watch:reload": "npm run -s watch & livereload \"$npm_package_config_templates_dir,public_html/assets/\" -e 'twig' -w $npm_package_config_reload_delay_ms"
+	},
+	"dependencies": {
+		"autoprefixer": "^6",
+		"chokidar-cli": "^1",
+		"csslint": "^1",
+		"eslint": "^3",
+		"imagemin-cli": "^3",
+		"livereload": "^0",
+		"node-sass": "^4",
+		"postcss-cli": "^2",
+		"sass-lint": "^1",
+		"uglify-js": "^2"
+	}
+}

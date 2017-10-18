@@ -1,0 +1,99 @@
+
+// .gamma {
+// 	@include font-size( gamma );
+// }
+
+// .delta {
+// 	@include font-size( delta );
+// }
+
+.h,
+%heading-style-1 {
+	font-family: $font-secondary;
+	font-weight: bold;
+	color: $colour-headings;
+	margin-bottom: $u * 0.5;
+}
+// ...
+
+.p,
+%paragraph {
+	display: block;
+	margin: 0 0 $u;
+}
+
+.a,
+%link {
+	color: $colour-link;
+	transition: color 0.2s;
+	text-decoration: none;
+	&:hover,
+	&:focus {
+		color: $colour-link--hover;
+	}
+}
+
+%list {
+	padding-left: $u * 1.2;
+}
+
+%list-item {
+	margin-bottom: $u * 0.6;
+}
+
+%unordered-list-item {
+	list-style: disc outside;
+}
+
+%ordered-list-item {
+	list-style: decimal outside;
+}
+
+.ol {
+	@extend %list;
+	li {
+		@extend %list-item;
+		@extend %ordered-list-item;
+	}
+}
+.ul {
+	@extend %list;
+	li {
+		@extend %list-item;
+		@extend %unordered-list-item;
+	}
+}
+
+.typeset {
+	h2 {
+		@extend %heading-style-1;
+		@include font-size( gamma );
+	}
+	h3 {
+		@extend %heading-style-1;
+		@include font-size( delta );
+	}
+	p,
+	ul,
+	ol,
+	img {
+		@extend %paragraph;
+	}
+	a {
+		@extend %link;
+	}
+	ol {
+		@extend %list;
+		li {
+			@extend %list-item;
+			@extend %ordered-list-item;
+		}
+	}
+	ul {
+		@extend %list;
+		li {
+			@extend %list-item;
+			@extend %unordered-list-item;
+		}
+	}
+}

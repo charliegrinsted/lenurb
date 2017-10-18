@@ -1,0 +1,31 @@
+{%- from '_macros' import image -%}
+{%- cache unless ( currentUser is not null and currentUser.admin ) -%}
+<?xml version="1.0"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>{{ siteName }}</title>
+		<link>{{ url( 'news' ) }}</link>
+		<atom:link href="{{ craft.request.url }}" rel="self" type="application/rss+xml" />
+		{% if seo.seoDescription|length %}
+			<description>{{ seo.seoDescription }}</description>
+		{% endif %}
+		<language>en-gb</language>
+		<pubDate>{{ now.rss }}</pubDate>
+		<lastBuildDate>{{ now.rss }}</lastBuildDate>
+
+		{% for entry in craft.entries.section( 'news' ).limit( 12 ) %}
+			<item>
+				<title>{{ entry.title }}</title>
+				<guid>{{ entry.url }}</guid>
+				<description>
+					<![CDATA[
+						<p>{{ image( entry.someImageField[0], 'assetTransformHandle', entry.title ) }}</p>
+						{{ entry.bodyText }}
+					]]>
+				</description>
+				<pubDate>{{ entry.postDate.rss }}</pubDate>
+			</item>
+		{% endfor %}
+	</channel>
+</rss>
+{%- endcache -%}

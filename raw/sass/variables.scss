@@ -1,0 +1,96 @@
+
+// Unit
+	// The fundamental size unit, usually the body text font size.
+	// All CSS sizes (margins, padding, positions, etc.) should be defined as multiples of $u.
+	$u: 18px;
+
+// Misc
+	// Enable `box-sizing: content-box;` for all elements. Beware: Andy will frown upon you.
+	$alternate-box-model: false;
+
+// Typography
+	// Define font sizes here, as multiples of $u, growing outwards from theta as required.
+	// If you run out of greek letters, the site probably has too many font sizes.
+	// `theta`, unit size, is applied to the body by default, and should be kept at 1.
+	$typography-sizes: (
+	//	alpha: 5,
+	//	beta: 3,
+		gamma: 2,
+		delta: 1.5,
+		eta: 1.2,
+		theta: 1,
+		iota: 0.8,
+	//	kappa: 0.7,
+	//	lambda: 0.5
+	);
+
+// Dimensions
+	// How wide containers will go, and how much side padding they have.
+	// These values will have different effects depending on the value of $alternate-box-model.
+	// Adjust the behaviour of $container-side-padding--mobile in container.scss (defaults to breakpoint c).
+	$container-max-width: 1920px;
+	$container-side-padding: $u * 2;
+	$container-side-padding--mobile: $u;
+
+// Fonts
+	// Define the site's fonts. They must be single names, not font stacks.
+	// If you're using font faces, these names can be anything you want.
+	$font-primary: 'Courier New';
+	$font-secondary: 'Times New Roman';
+	$font-icons: 'Site Icons';
+
+	// Define font face files and styles.
+	// Use $font-faces for [eot, woff2, woff, ttf], $font-faces-legacy for [eot, woff, ttf, svg]
+	// Syntax: 'font filename without extension' 'Font Name' font-weight font-style
+	// font-weight and font-style can be omitted (defaults to normal).
+	$font-faces: (
+		'font1-regular' $font-primary,
+		'font1-bold' $font-primary bold,
+		'font1-bold-italic' $font-primary bold italic,
+		'font2-regular' $font-secondary
+	);
+	$font-faces-legacy: (
+		'icomoon' $font-icons,
+	);
+
+// Colours
+	// Keep track of explicit colours here (use colourful names, and don't use these variables outside of this file).
+	$colour-brand-blue: #02b6f1;
+	$colour-light-grey: #f3f3f3;
+	$colour-dark-grey: #666;
+
+	// Define implicit site colours here (don't use colourful names, use these variables elsewhere).
+	$colour-primary: $colour-brand-blue;
+	$colour-headings: $colour-dark-grey;
+	$colour-link: $colour-brand-blue;
+	$colour-link--hover: lighten( $colour-link, 30% );
+
+// Grid
+	// Rows have a class of `row`.
+	// Columns have a class of `col`, and any corresponding width class(es).
+	// Width class syntax: {breakpoint-id}{column-size}-{grid-size} e.g. a4-12, b2-5, c3-7.
+	// A column must be a direct child of a row.
+	// Width classes can be used without a row parent, to size other elements.
+	// List the grid sizes you will be using e.g. $grid-sizes: ( 12 7 5 ).
+	// New grid sizes add a lot of CSS, so be conservative!
+	$grid-sizes: ( 12 );
+	$grid-gutter-width: $u * 2;
+	// Breakpoint 'a' already exists as the default (∞) breakpoint
+	$grid-breakpoints: (
+		b 767px,
+		c 479px
+	);
+
+// Icons
+	// List your icon names and respective font codepoints here.
+	$icon-list: (
+		twitter: e600,
+		facebook: e601,
+		instagram: e602
+	);
+	// The framework provides a placeholder selector for icons; extend `%icon-pseudo` in your ::before or ::after selectors.
+	// To choose the icon, also extend the relevant icon name, e.g. `%icon-pseudo--twitter` for a twitter icon.
+	// The classes `icon` and `icon-end` are also provided, for quickly applying before and after icons.
+	// `icon icon--twitter` will display a twitter icon before an element's text.
+	// `icon-end icon-end--facebook` will display a facebook icon after an element's text.
+	// In general, use the classes for simple things like social icons, and the extends for everything else.

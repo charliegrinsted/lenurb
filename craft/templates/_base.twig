@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head itemscope itemtype="http://schema.org/WebSite">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,user-scalable=0,initial-scale=1,minimum-scale=1,maximum-scale=1">
+	<meta name="robots" content="noodp">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<link rel="shortcut icon" href="{{ craft.config.environmentVariables['assetsUrl'] }}img/favicon.ico">
+	<link rel="apple-touch-icon" href="{{ craft.config.environmentVariables['assetsUrl'] }}img/apple-touch-icon.png">{# 180x180 #}
+
+	<link rel="stylesheet" href="{{ craft.config.environmentVariables['assetsUrl'] }}css/main.css" media="screen">
+	<!--[if lte IE 8]>
+		<link rel="stylesheet" href="{{ craft.config.environmentVariables['assetsUrl'] }}css/ie8.css">
+		<script src="{{ craft.config.environmentVariables['assetsUrl'] }}js/html5shiv.min.js"></script>
+	<![endif]-->
+
+	{#<link rel="alternate" type="application/rss+xml" title="RSS Feed for {{ siteName }}" href="{{ url( 'feed.rss' ) }}">#}
+
+	<link rel="canonical" href="{{ craft.request.url }}" itemprop="url">
+	<meta property="og:url" content="{{ craft.request.url }}">
+
+	<meta name="author" content="{{ siteName }}">
+	<meta property="og:site_name" content="{{ siteName }}">
+
+	<meta property="og:type" content="website">
+
+	{% set final_description = ( seo_description is defined and seo_description|length > 0 ) ? seo_description : ( page_description is defined ? page_description : seo.seoDescription ) %}
+	<meta name="description" content="{{ final_description }}">
+	<meta property="og:description" content="{{ final_description }}">
+
+	{% set final_title = ( page_title is defined ? page_title ~ ' - ' ) ~ siteName %}
+	<meta property="og:title" content="{{ final_title }}">
+	<title itemprop="name">{{ final_title }}</title>
+
+	{% if page_image is defined and page_image is not null %}
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:image" content="{{ page_image.getUrl( { width: 1200, height: 600 } ) }}">
+		<meta property="og:image" content="{{ page_image.getUrl( { width: 1200, height: 630 } ) }}">
+	{% else %}
+		<meta name="twitter:image" content="{{ craft.config.environmentVariables['assetsUrl'] }}img/share-square.png">{# 200x200 #}
+		<meta property="og:image" content="{{ craft.config.environmentVariables['assetsUrl'] }}img/share-square.png">{# 200x200 #}
+	{% endif %}
+</head>
+
+<body>
+
+<div class="cookie-notice">This website places cookies on your computer to improve your experience. By continuing to browse the site, you are agreeing to our use of cookies. For more details, see our <a href="{{ url( 'legal/cookies' ) }}">cookie policy</a>. <button>Close</button></div>
+
+<div class="header" role="banner">
+	<a href="{{ siteUrl }}">Logo</a>
+	<div role="navigation">
+		<ul class="">
+			{% set site_area = craft.request.firstSegment %}
+			{% set navigation = {
+				'home': 'Latest',
+				'news': 'News',
+				'photos': 'Photos',
+				'blog': 'Blog',
+				'about': 'About'
+			} %}
+			{% for slug, label in navigation %}
+				<li{{ ( site_area == slug ) or ( site_area == '' and slug == 'home' ) ? ' class="selected"' }}><a href="{{ url( ( slug == 'home' ? '' : slug ) ) }}">{{ label }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+<div role="main">
+	{% block content %}{% endblock %}
+</div>
+
+<div class="footer" role="contentinfo">
+	<div role="navigation">
+		<ul>
+			<li><a href="{{ url( 'legal/privacy' ) }}">Privacy policy</a></li>
+			<li><a href="{{ url( 'legal/cookies' ) }}">Cookie policy</a></li>
+		</ul>
+	</div>
+</div>
+
+<script src="{{ craft.config.environmentVariables['assetsUrl'] }}js/final.js"></script>
+{% block script %}{% endblock %}
+
+</body>
+</html>

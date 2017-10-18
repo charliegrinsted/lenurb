@@ -1,0 +1,53 @@
+
+@import 'variables';
+
+img {
+	width: auto;
+}
+
+blockquote,
+q {
+	&:before,
+	&:after {
+		content: none;
+	}
+}
+
+@if $alternate-box-model {
+	* {
+		&:before,
+		&:after {
+			box-sizing: inherit;
+		}
+	}
+}
+
+// IE8 doesn't tolerate :: and : set at the same time, so we
+// can't just extend the rules from static/icons.scss, sadly.
+%icon-pseudo-ie8 {
+	font-family: $font-icons;
+	vertical-align: middle;
+	speak: none;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+}
+
+.icon:before,
+.icon-end:after {
+	@extend %icon-pseudo-ie8;
+}
+
+@each $name, $code in $icon-list {
+	%icon-pseudo-ie8--#{$name} {
+		// Sass has trouble escaping unicode, hence this strange line.
+		// More info: https://github.com/sass/sass/issues/1395#issuecomment-57483844
+		content: unquote( '\"' ) + unquote( str-insert( $code, '\\', 1 ) ) + unquote( '\"' );
+	}
+	.icon--#{$name}:before,
+	.icon-end--#{$name}:after {
+		@extend %icon-pseudo-ie8--#{$name};
+	}
+}

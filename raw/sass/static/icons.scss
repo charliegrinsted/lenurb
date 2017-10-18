@@ -1,0 +1,28 @@
+
+%icon-pseudo {
+	font-family: $font-icons;
+	vertical-align: middle;
+	speak: none;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+}
+
+.icon::before,
+.icon-end::after {
+	@extend %icon-pseudo;
+}
+
+@each $name, $code in $icon-list {
+	%icon-pseudo--#{$name} {
+		// Sass has trouble escaping unicode, hence this strange line.
+		// More info: https://github.com/sass/sass/issues/1395#issuecomment-57483844
+		content: unquote( '\"' ) + unquote( str-insert( $code, '\\', 1 ) ) + unquote( '\"' );
+	}
+	.icon--#{$name}::before,
+	.icon-end--#{$name}::after {
+		@extend %icon-pseudo--#{$name};
+	}
+}
