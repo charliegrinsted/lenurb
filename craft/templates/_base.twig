@@ -10,12 +10,6 @@
 	<link rel="apple-touch-icon" href="{{ craft.config.environmentVariables['assetsUrl'] }}img/apple-touch-icon.png">{# 180x180 #}
 
 	<link rel="stylesheet" href="{{ craft.config.environmentVariables['assetsUrl'] }}css/main.css" media="screen">
-	<!--[if lte IE 8]>
-		<link rel="stylesheet" href="{{ craft.config.environmentVariables['assetsUrl'] }}css/ie8.css">
-		<script src="{{ craft.config.environmentVariables['assetsUrl'] }}js/html5shiv.min.js"></script>
-	<![endif]-->
-
-	{#<link rel="alternate" type="application/rss+xml" title="RSS Feed for {{ siteName }}" href="{{ url( 'feed.rss' ) }}">#}
 
 	<link rel="canonical" href="{{ craft.request.url }}" itemprop="url">
 	<meta property="og:url" content="{{ craft.request.url }}">
@@ -44,9 +38,6 @@
 </head>
 
 <body>
-
-<div class="cookie-notice">This website places cookies on your computer to improve your experience. By continuing to browse the site, you are agreeing to our use of cookies. For more details, see our <a href="{{ url( 'legal/cookies' ) }}">cookie policy</a>. <button>Close</button></div>
-
 <div class="header" role="banner">
 	<a href="{{ siteUrl }}">Logo</a>
 	<div role="navigation">
