@@ -1,0 +1,11 @@
+{% extends "_layouts/cp" %}
+
+{% set title = "Le Nurb League" %}
+
+{% set content %}
+<form method="POST" accept-charset="UTF-8" action="">
+	{{ getCsrfInput() }}
+	<input type="hidden" name="action" value="leNurb/import/importAllPlayers">
+	<button type="submit">Import players</button>
+</form>
+{% endset %}
