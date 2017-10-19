@@ -68,9 +68,8 @@ class LeNurb_ImportService extends BaseApplicationComponent
         $team->fplId = $playerData['team'];
         $teamToAssign = $team->first();
         $entry->getContent()->setAttributes(array(
-            'title' => ($playerData['first_name'] . ' ' . $playerData['second_name']),
-            'firstName' => ($playerData['first_name']),
-            'surname' => ($playerData['second_name']),
+            'title' => ($playerData['web_name']),
+            'fullName' => ($playerData['first_name'] . ' ' . $playerData['second_name']),
             'currentTeam' => array(
                 $teamToAssign->id
             ),
