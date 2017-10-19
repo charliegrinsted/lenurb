@@ -1,0 +1,11 @@
+{% from '_macros' import image %}
+{% set page_title = entry.title %}
+
+{% extends '_base' %}
+
+{% block content %}
+{% set players = craft.entries.section( 'players' ).relatedTo( entry ) %}
+{% for player in players %}
+	<p class="p">{{ player.title }}</p>
+{% endfor %}
+{% endblock %}

@@ -49,11 +49,31 @@ class LeNurb_ImportService extends BaseApplicationComponent
         $entry = new EntryModel();
         $entry->sectionId = $sectionId;
         $entry->enabled = true;
+        switch ($playerData['element_type']) {
+            case 1:
+                $entry->typeId = 3;
+                break;
+            case 2:
+                $entry->typeId = 4;
+                break;
+            case 3:
+                $entry->typeId = 5;
+                break;
+            case 4:
+                $entry->typeId = 6;
+                break;
+        }
         $entry->slug = strtolower($playerData['first_name'] . '-' . $playerData['second_name']);
+        $team = craft()->elements->getCriteria(ElementType::Entry);
+        $team->fplId = $playerData['team'];
+        $teamToAssign = $team->first();
         $entry->getContent()->setAttributes(array(
             'title' => ($playerData['first_name'] . ' ' . $playerData['second_name']),
             'firstName' => ($playerData['first_name']),
             'surname' => ($playerData['second_name']),
+            'currentTeam' => array(
+                $teamToAssign->id
+            ),
         ));
         craft()->entries->saveEntry($entry);
     }
