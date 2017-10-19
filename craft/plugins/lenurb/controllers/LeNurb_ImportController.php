@@ -18,8 +18,6 @@ class LeNurb_ImportController extends BaseController
 
     public function actionImportAllPlayers()
     {
-        $data = craft()->leNurb_import->getAllPlayerData();
-        $players = $data['elements'];
-        craft()->leNurb_import->storeAllPlayerData($players);
+        craft()->tasks->createTask('LeNurb_Import', Craft::t('Importing players'));
     }
 }

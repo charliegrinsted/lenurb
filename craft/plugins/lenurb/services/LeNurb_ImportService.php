@@ -37,13 +37,6 @@ class LeNurb_ImportService extends BaseApplicationComponent
         }
     }
 
-    public function storeAllPlayerData($players)
-    {
-        foreach ($players as $player) {
-            craft()->leNurb_import->createPlayerEntry($player, 3);
-        }
-    }
-
     public function createPlayerEntry($playerData, $sectionId)
     {
         $entry = new EntryModel();
@@ -75,5 +68,6 @@ class LeNurb_ImportService extends BaseApplicationComponent
             ),
         ));
         craft()->entries->saveEntry($entry);
+        return true;
     }
 }
