@@ -39,16 +39,13 @@
 
 <body>
 <div class="header" role="banner">
-	<a href="{{ siteUrl }}">Logo</a>
 	<div role="navigation">
 		<ul class="">
 			{% set site_area = craft.request.firstSegment %}
 			{% set navigation = {
-				'home': 'Latest',
-				'news': 'News',
-				'photos': 'Photos',
-				'blog': 'Blog',
-				'about': 'About'
+				'home': 'Home',
+				'stats/teams/': 'Teams',
+				'stats/players': 'Players',
 			} %}
 			{% for slug, label in navigation %}
 				<li{{ ( site_area == slug ) or ( site_area == '' and slug == 'home' ) ? ' class="selected"' }}><a href="{{ url( ( slug == 'home' ? '' : slug ) ) }}">{{ label }}</a></li>
@@ -64,8 +61,6 @@
 <div class="footer" role="contentinfo">
 	<div role="navigation">
 		<ul>
-			<li><a href="{{ url( 'legal/privacy' ) }}">Privacy policy</a></li>
-			<li><a href="{{ url( 'legal/cookies' ) }}">Cookie policy</a></li>
 		</ul>
 	</div>
 </div>

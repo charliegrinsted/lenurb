@@ -6,6 +6,6 @@
 {% block content %}
 {% set players = craft.entries.section( 'players' ).relatedTo( entry ) %}
 {% for player in players %}
-	<p class="p">{{ player.title }}</p>
+	<p class="p"><a href="{{ player.url }}">{{ player.title }}</a></p>
 {% endfor %}
 {% endblock %}
