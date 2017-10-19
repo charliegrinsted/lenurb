@@ -63,7 +63,7 @@ class LeNurb_ImportService extends BaseApplicationComponent
                 $entry->typeId = 6;
                 break;
         }
-        $entry->slug = strtolower($playerData['first_name'] . '-' . $playerData['second_name']);
+        $entry->slug = $playerData['id'];
         $team = craft()->elements->getCriteria(ElementType::Entry);
         $team->fplId = $playerData['team'];
         $teamToAssign = $team->first();
