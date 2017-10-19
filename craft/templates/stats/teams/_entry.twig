@@ -4,8 +4,8 @@
 {% extends '_base' %}
 
 {% block content %}
-{% set players = craft.entries.section( 'players' ).relatedTo( entry ) %}
+{% set players = craft.entries.section( 'players' ).relatedTo( entry ).order( 'totalPoints desc' ) %}
 {% for player in players %}
-	<p class="p"><a href="{{ player.url }}">{{ player.title }}</a></p>
+	<p class="p"><a href="{{ player.url }}">{{ player.title }}</a> - {{ player.totalPoints }}</p>
 {% endfor %}
 {% endblock %}

@@ -29,7 +29,6 @@ class LeNurb_ImportService extends BaseApplicationComponent
                 return;
             }
             $items = $response->json();
-            // Cache the response
             craft()->fileCache->set($url, $items);
             return $items;
         } catch(\Exception $e) {
@@ -37,11 +36,30 @@ class LeNurb_ImportService extends BaseApplicationComponent
         }
     }
 
+    public function downloadPlayerPhoto($playerId)
+    {
+        $fileName = $playerId . '.png';
+        $fileUrl = 'https://platform-static-files.s3.amazonaws.com/premierleague/photos/players/250x250/p' . $playerId . '.png';
+        $assetSourceId = 1;
+        $assetFolderId = (int)craft()->assets->getRootFolderBySourceId($assetSourceId)->id;
+        $tempFilePath = AssetsHelper::getTempFilePath($fileName);
+        $fileContents = file_get_contents($fileUrl);
+        file_put_contents($tempFilePath, $fileContents);
+        $oAssetOperationResponse = craft()->assets->insertFileByLocalPath(
+            $tempFilePath,
+            $fileName,
+            $assetFolderId,
+            AssetConflictResolution::Replace
+        );
+        return (int)$oAssetOperationResponse->responseData["fileId"];
+    }
+
+
     public function createPlayerEntry($playerData, $sectionId)
     {
         $entry = new EntryModel();
         $entry->sectionId = $sectionId;
-        $entry->enabled = true;
+        $entry->enabled = ($playerData['status'] === 'u' ? false : true );
         switch ($playerData['element_type']) {
             case 1:
                 $entry->typeId = 3;
@@ -60,12 +78,17 @@ class LeNurb_ImportService extends BaseApplicationComponent
         $team = craft()->elements->getCriteria(ElementType::Entry);
         $team->fplId = $playerData['team'];
         $teamToAssign = $team->first();
+        $playerPhotoId = craft()->leNurb_import->downloadPlayerPhoto($playerData['code']);
         $entry->getContent()->setAttributes(array(
             'title' => ($playerData['web_name']),
             'fullName' => ($playerData['first_name'] . ' ' . $playerData['second_name']),
             'currentTeam' => array(
                 $teamToAssign->id
             ),
+            'profilePhoto' => array(
+               $playerPhotoId
+            ),
+            'totalPoints' => ($playerData['total_points']),
         ));
         craft()->entries->saveEntry($entry);
         return true;

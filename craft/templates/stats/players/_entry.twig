@@ -6,5 +6,6 @@
 {% block content %}
 <div class="container">
 	<h1>{{ entry.title }}</h1>
+	{{ image( entry.profilePhoto[0], 'profilePhoto', entry.title ) }}
 </div>
 {% endblock %}
