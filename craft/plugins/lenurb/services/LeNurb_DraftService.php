@@ -23,6 +23,12 @@ class LeNurb_DraftService extends BaseApplicationComponent
             $entry->slug = $playerId;
             $playerToAssign = $entry->first();
             if ($playerToAssign) {
+                // check if player has an owner and cancel if they do
+                if (!craft()->leNurb_draft->checkIfPlayerIsAvailable($playerToAssign)) {
+                    return false;
+                }
+                // check to see if they have space in their squad
+
                 $playerToAssign->getContent()->setAttributes(array(
                     'currentOwner' => array(
                         $participant->id
@@ -33,5 +39,13 @@ class LeNurb_DraftService extends BaseApplicationComponent
         } else {
             return true;
         }
+    }
+
+    private function checkIfPlayerIsAvailable($player)
+    {
+        $criteria = craft()->elements->getCriteria(ElementType::User);
+        $criteria->relatedTo = $player;
+        $attachedParticipant = $criteria->find();
+        return empty($attachedParticipant);
     }
 }
