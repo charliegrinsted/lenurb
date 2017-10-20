@@ -7,5 +7,13 @@
 {% set players = craft.entries.section( 'players' ).relatedTo( entry ).order( 'totalPoints desc' ) %}
 {% for player in players %}
 	<p class="p"><a href="{{ player.url }}">{{ player.title }}</a> - {{ player.totalPoints }}</p>
+	{% if currentUser and player.currentOwner|length == 0 %}
+		<form method="POST" accept-charset="UTF-8" action="">
+			{{ getCsrfInput() }}
+			<input type="hidden" name="action" value="leNurb/draft/draftPlayerIntoSquad">
+			<input type="hidden" name="playerId" value="{{ player.slug }}">
+			<button type="submit">Draft this player</button>
+		</form>
+	{% endif %}
 {% endfor %}
 {% endblock %}

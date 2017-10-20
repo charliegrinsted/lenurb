@@ -6,6 +6,8 @@
 {% block content %}
 <div class="container">
 	<h1>{{ entry.title }}</h1>
-	{{ image( entry.profilePhoto[0], 'profilePhoto', entry.title ) }}
+	{% if entry.profilePhoto|length %}
+		{{ image( entry.profilePhoto[0], 'profilePhoto', entry.title ) }}
+	{% endif %}
 </div>
 {% endblock %}
