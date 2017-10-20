@@ -8,3 +8,22 @@
 	{%- set random_colour = random( hex ) ~ random( hex ) ~ random( hex ) -%}
 	<img{% if class is not null %} class="{{ class }}"{% endif %} src="https://tools.ten4dev.com/placeholder/{{ width }}-{{ height }}-{{ random_colour }}" width="{{ width }}" height="{{ height }}" alt="Placeholder">
 {%- endmacro %}
+
+{% macro playersByPosition( players, position ) -%}
+	<h2>{{ position }}</h2>
+	<div class="row">
+		{% for player in players %}
+			<div class="col a3-12 b4-12 c6-12">
+				<p class="p"><a href="{{ player.url }}">{{ player.title }}</a> - {{ player.totalPoints }}</p>
+				{% if currentUser and player.currentOwner|length == 0 %}
+					<form method="POST" accept-charset="UTF-8" action="">
+						{{ getCsrfInput() }}
+						<input type="hidden" name="action" value="leNurb/draft/draftPlayerIntoSquad">
+						<input type="hidden" name="playerId" value="{{ player.slug }}">
+						<button type="submit">Draft this player</button>
+					</form>
+				{% endif %}
+			</div>
+		{% endfor %}
+	</div>
+{%- endmacro %}

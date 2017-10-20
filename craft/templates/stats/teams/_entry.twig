@@ -1,23 +1,23 @@
-{% from '_macros' import image %}
+{% from '_macros' import image, playersByPosition %}
 {% set page_title = entry.title %}
 {% extends '_base' %}
 {% block content %}
 {% set players = craft.entries.section( 'players' ).relatedTo( entry ).order( 'totalPoints desc' ) %}
-<div class="container">
-	<div class="row">
-		{% for player in players %}
-			<div class="col a6-12 b3-12 c6-12">
-				<p class="p"><a href="{{ player.url }}">{{ player.title }}</a> - {{ player.totalPoints }}</p>
-				{% if currentUser and player.currentOwner|length == 0 %}
-					<form method="POST" accept-charset="UTF-8" action="">
-						{{ getCsrfInput() }}
-						<input type="hidden" name="action" value="leNurb/draft/draftPlayerIntoSquad">
-						<input type="hidden" name="playerId" value="{{ player.slug }}">
-						<button type="submit">Draft this player</button>
-					</form>
-				{% endif %}
-			</div>
-		{% endfor %}
+{% set goalkeepers = players.type( 'gk' ) %}
+{% set defenders = players.type( 'def' ) %}
+{% set midfielders = players.type( 'mid' ) %}
+{% set forwards = players.type( 'fwd' ) %}
+<div class="section section--bordered">
+	<div class="container">
+		{% if entry.crest|length %}
+			{{ image( entry.crest[0], 'teamCrest', entry.title, 'team-bar__crest' ) }}
+		{% endif %}
 	</div>
+</div>
+<div class="container">
+	{{ playersByPosition( goalkeepers, 'Goalkeepers' )}}
+	{{ playersByPosition( defenders, 'Defenders' )}}
+	{{ playersByPosition( midfielders, 'Midfielders' )}}
+	{{ playersByPosition( forwards, 'Forwards' )}}
 </div>
 {% endblock %}

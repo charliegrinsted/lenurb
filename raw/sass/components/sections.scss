@@ -1,0 +1,8 @@
+
+.section {
+	padding: ( $container-side-padding / 2 ) 0;
+}
+
+.section--bordered {
+	border-bottom: 1px solid $colour-border;
+}
