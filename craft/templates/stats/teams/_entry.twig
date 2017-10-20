@@ -1,19 +1,23 @@
 {% from '_macros' import image %}
 {% set page_title = entry.title %}
-
 {% extends '_base' %}
-
 {% block content %}
 {% set players = craft.entries.section( 'players' ).relatedTo( entry ).order( 'totalPoints desc' ) %}
-{% for player in players %}
-	<p class="p"><a href="{{ player.url }}">{{ player.title }}</a> - {{ player.totalPoints }}</p>
-	{% if currentUser and player.currentOwner|length == 0 %}
-		<form method="POST" accept-charset="UTF-8" action="">
-			{{ getCsrfInput() }}
-			<input type="hidden" name="action" value="leNurb/draft/draftPlayerIntoSquad">
-			<input type="hidden" name="playerId" value="{{ player.slug }}">
-			<button type="submit">Draft this player</button>
-		</form>
-	{% endif %}
-{% endfor %}
+<div class="container">
+	<div class="row">
+		{% for player in players %}
+			<div class="col a6-12 b3-12 c6-12">
+				<p class="p"><a href="{{ player.url }}">{{ player.title }}</a> - {{ player.totalPoints }}</p>
+				{% if currentUser and player.currentOwner|length == 0 %}
+					<form method="POST" accept-charset="UTF-8" action="">
+						{{ getCsrfInput() }}
+						<input type="hidden" name="action" value="leNurb/draft/draftPlayerIntoSquad">
+						<input type="hidden" name="playerId" value="{{ player.slug }}">
+						<button type="submit">Draft this player</button>
+					</form>
+				{% endif %}
+			</div>
+		{% endfor %}
+	</div>
+</div>
 {% endblock %}

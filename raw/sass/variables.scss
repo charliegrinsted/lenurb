@@ -6,7 +6,7 @@
 
 // Misc
 	// Enable `box-sizing: content-box;` for all elements. Beware: Andy will frown upon you.
-	$alternate-box-model: false;
+	$alternate-box-model: true;
 
 // Typography
 	// Define font sizes here, as multiples of $u, growing outwards from theta as required.
@@ -35,7 +35,7 @@
 // Fonts
 	// Define the site's fonts. They must be single names, not font stacks.
 	// If you're using font faces, these names can be anything you want.
-	$font-primary: 'Courier New';
+	$font-primary: 'Arial';
 	$font-secondary: 'Times New Roman';
 	$font-icons: 'Site Icons';
 
@@ -55,15 +55,17 @@
 
 // Colours
 	// Keep track of explicit colours here (use colourful names, and don't use these variables outside of this file).
-	$colour-brand-blue: #02b6f1;
+	$colour-black: #000000;
 	$colour-light-grey: #f3f3f3;
 	$colour-dark-grey: #666;
+	$colour-white: #FFFFFF;
 
 	// Define implicit site colours here (don't use colourful names, use these variables elsewhere).
-	$colour-primary: $colour-brand-blue;
+	$colour-primary: $colour-black;
 	$colour-headings: $colour-dark-grey;
-	$colour-link: $colour-brand-blue;
+	$colour-link: $colour-dark-grey;
 	$colour-link--hover: lighten( $colour-link, 30% );
+	$colour-button-text: $colour-white;
 
 // Grid
 	// Rows have a class of `row`.
