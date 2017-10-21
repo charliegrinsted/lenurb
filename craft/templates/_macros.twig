@@ -22,6 +22,13 @@
 						<input type="hidden" name="playerId" value="{{ player.slug }}">
 						<button type="submit">Draft this player</button>
 					</form>
+				{% elseif player.currentOwner[0].id == currentUser.id %}
+					<form method="POST" accept-charset="UTF-8" action="">
+						{{ getCsrfInput() }}
+						<input type="hidden" name="action" value="leNurb/draft/releasePlayerFromSquad">
+						<input type="hidden" name="playerId" value="{{ player.slug }}">
+						<button type="submit">Release this player</button>
+					</form>
 				{% endif %}
 			</div>
 		{% endfor %}

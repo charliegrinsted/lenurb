@@ -22,4 +22,11 @@ class LeNurb_DraftController extends BaseController
         $playerId = craft()->request->getParam('playerId');
         craft()->leNurb_draft->assignPlayerToParticipant($playerId);
     }
+
+   	public function actionReleasePlayerFromSquad()
+    {
+    	$this->requirePostRequest();
+        $playerId = craft()->request->getParam('playerId');
+        craft()->leNurb_draft->releasePlayerFromSquad($playerId);
+    }
 }

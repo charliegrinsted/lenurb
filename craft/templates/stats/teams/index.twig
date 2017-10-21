@@ -5,8 +5,17 @@
 {% block content %}
 <div class="container">
 	<h1>Teams</h1>
-	{% for team in teams %}
-		<p class="p"><a href="{{ team.url }}">{{ team.title }}</a></p>
-	{% endfor %}
+	<div class="row">
+		{% for team in teams %}
+			<div class="col a4-12 c6-12">
+				<a class="team-link" href="{{ team.url }}">
+					{% if team.crest|length %}
+						{{ image( team.crest[0], 'teamCrest', team.title, 'team-bar__crest' ) }}
+					{% endif %}
+					<p class="p">{{ team.title }}</p>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
 </div>
 {% endblock %}

@@ -6,6 +6,13 @@
 	<h1>{{ entry.title }}</h1>
 	{% if entry.currentOwner|length %}
 		<p class="p">Current manager: {{ entry.currentOwner[0].username }}</p>
+	{% elseif currentUser %}
+		<form method="POST" accept-charset="UTF-8" action="">
+			{{ getCsrfInput() }}
+			<input type="hidden" name="action" value="leNurb/draft/draftPlayerIntoSquad">
+			<input type="hidden" name="playerId" value="{{ entry.slug }}">
+			<button type="submit">Draft {{ entry.title }}</button>
+		</form>
 	{% endif %}
 	{% if entry.profilePhoto|length %}
 		{{ image( entry.profilePhoto[0], 'profilePhoto', entry.title ) }}

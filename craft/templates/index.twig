@@ -1,16 +1,18 @@
-{% from '_macros' import image %}
+{% from '_macros' import image, playersByPosition %}
 {% set page_title = 'Le Nurb League' %}
 {% extends '_base' %}
 
 {% block content %}
 <div class="container">
 	{% if currentUser %}
-		{% set currentSquad = craft.entries.section( 'players' ).relatedTo( currentUser ) %}
+		{% set currentSquad = craft.entries.section( 'squad' ).relatedTo( currentUser ).first() %}
 		<h1>Welcome back {{ currentUser.firstName }}</h1>
 		<h2>Your team:</h2>
-		{% for player in currentSquad %}
-			<p><a href="{{ player.url }}">{{ player.title }}</a></p>
-		{% endfor %}
+		{{ playersByPosition( currentSquad.goalkeepers, 'Goalkeepers' )}}
+		{{ playersByPosition( currentSquad.defenders, 'Defenders' )}}
+		{{ playersByPosition( currentSquad.midfielders, 'Midfielders' )}}
+		{{ playersByPosition( currentSquad.forwards, 'Forwards' )}}
+		{{ playersByPosition( currentSquad.bench, 'Bench' )}}
 	{% else %}
 		<form class="form" method="POST" accept-charset="UTF-8">
 			{{ getCsrfInput() }}

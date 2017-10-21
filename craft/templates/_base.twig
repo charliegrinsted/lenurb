@@ -46,6 +46,7 @@
 				'home': 'Home',
 				'stats/teams/': 'Teams',
 				'stats/players': 'Players',
+				'logout': 'Logout',
 			} %}
 			{% for slug, label in navigation %}
 				<li{{ ( site_area == slug ) or ( site_area == '' and slug == 'home' ) ? ' class="selected"' }}><a href="{{ url( ( slug == 'home' ? '' : slug ) ) }}">{{ label }}</a></li>
