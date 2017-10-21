@@ -1,0 +1,12 @@
+{% from '_macros' import image %}
+{% set page_title = 'All Players' %}
+{% set players = craft.entries.section( 'players' ) %}
+{% extends '_base' %}
+{% block content %}
+<div class="container">
+	<h1>Teams</h1>
+</div>
+{% for player in players %}
+	<p class="p"><a href="{{ player.url }}">{{ player.title }}</a></p>
+{% endfor %}
+{% endblock %}

@@ -28,7 +28,7 @@
 	// How wide containers will go, and how much side padding they have.
 	// These values will have different effects depending on the value of $alternate-box-model.
 	// Adjust the behaviour of $container-side-padding--mobile in container.scss (defaults to breakpoint c).
-	$container-max-width: 1920px;
+	$container-max-width: 1200px;
 	$container-side-padding: $u * 2;
 	$container-side-padding--mobile: $u;
 

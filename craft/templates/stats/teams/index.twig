@@ -5,8 +5,8 @@
 {% block content %}
 <div class="container">
 	<h1>Teams</h1>
+	{% for team in teams %}
+		<p class="p"><a href="{{ team.url }}">{{ team.title }}</a></p>
+	{% endfor %}
 </div>
-{% for team in teams %}
-	<p class="p"><a href="{{ team.url }}">{{ team.title }}</a></p>
-{% endfor %}
 {% endblock %}

@@ -1,12 +1,9 @@
 {% from '_macros' import image %}
 {% set page_title = entry.title %}
-
 {% extends '_base' %}
-
 {% block content %}
 <div class="container">
 	<h1>{{ entry.title }}</h1>
-
 	{% if entry.currentOwner|length %}
 		<p class="p">Current manager: {{ entry.currentOwner[0].username }}</p>
 	{% endif %}
