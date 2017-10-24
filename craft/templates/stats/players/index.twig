@@ -1,6 +1,6 @@
 {% from '_macros' import image %}
 {% set page_title = 'All Players' %}
-{% set players = craft.entries.section( 'players' ) %}
+{% set players = craft.entries.section( 'players' ).limit( null ) %}
 {% extends '_base' %}
 {% block content %}
 <div class="container">
