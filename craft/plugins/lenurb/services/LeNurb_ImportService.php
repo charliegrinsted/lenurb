@@ -95,15 +95,11 @@ class LeNurb_ImportService extends BaseApplicationComponent
         $team = craft()->elements->getCriteria(ElementType::Entry);
         $team->fplId = $playerData['team'];
         $teamToAssign = $team->first();
-        $playerPhotoId = craft()->leNurb_import->downloadPlayerPhoto($playerData['code']);
         $entry->getContent()->setAttributes(array(
             'title' => ($playerData['web_name']),
             'fullName' => ($playerData['first_name'] . ' ' . $playerData['second_name']),
             'currentTeam' => array(
                 $teamToAssign->id
-            ),
-            'profilePhoto' => array(
-               $playerPhotoId
             ),
             'totalPoints' => ($playerData['total_points']),
         ));
