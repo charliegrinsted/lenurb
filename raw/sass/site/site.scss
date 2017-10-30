@@ -19,13 +19,13 @@ button {
 %btn {
 	@include font-size( iota );
 	background-color: $colour-link;
-	border: 3px solid $colour-link;
+	border: 1px solid $colour-link;
 	border-radius: ( $u * 0.4444 );
 	color: $colour-button-text;
 	display: inline-block;
 	font-weight: bold;
 	line-height: 1.7777;
-	padding: ( $u * 0.4 ) ( $u * 1.444 ) ( $u * 0.5555 );
+	padding: ( $u * 0.2 ) ( $u );
 	max-width: 100%;
 	transition: background-color 0.2s, border-color 0.2s, color 0.2s;
 	width: auto;

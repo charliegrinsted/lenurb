@@ -1,0 +1,9 @@
+
+.lineup__pending {
+	border: 1px solid black;
+	min-height: 200px;
+}
+.lineup__player {
+	border: 1px solid $colour-border;
+	padding: ( $u / 2 ) $u;
+}
