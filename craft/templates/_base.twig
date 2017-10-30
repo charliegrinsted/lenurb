@@ -51,6 +51,9 @@
 			{% for slug, label in navigation %}
 				<li{{ ( site_area == slug ) or ( site_area == '' and slug == 'home' ) ? ' class="selected"' }}><a href="{{ url( ( slug == 'home' ? '' : slug ) ) }}">{{ label }}</a></li>
 			{% endfor %}
+			{% if currentUser %}
+				<li><a href="{{ url( 'logout' ) }}">Logout</a></li>
+			{% endif %}
 		</ul>
 	</div>
 </div>
