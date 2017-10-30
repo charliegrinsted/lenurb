@@ -1,12 +1,32 @@
 {% from '_macros' import image %}
 {% set page_title = 'All Players' %}
-{% set players = craft.entries.section( 'players' ).limit( null ) %}
+{% set players = craft.entries(
+	{
+		section: 'players',
+		limit: null,
+		order: 'totalPoints desc',
+		with: [
+			['currentTeam.crest', { kind: 'image' }]
+		]
+	}
+) %}
 {% extends '_base' %}
 {% block content %}
 <div class="container">
 	<h1>Teams</h1>
+	<table>
+		<tr>
+			<td></td>
+			<td>Name</td>
+			<td>Total Points</td>
+		</tr>
+		{% for player in players %}
+		<tr>
+			<td>{{ image( player.currentTeam[0].crest[0], 'crestSmall', player.currentTeam[0].title ) }}</td>
+			<td><a href="{{ player.url }}">{{ player.title }}</a></td>
+			<td>{{ player.totalPoints }}</td>
+		</tr>
+		{% endfor %}
+	</table>
 </div>
-{% for player in players %}
-	<p class="p"><a href="{{ player.url }}">{{ player.title }}</a></p>
-{% endfor %}
 {% endblock %}
