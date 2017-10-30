@@ -8,11 +8,11 @@
 		{% set currentSquad = craft.entries.section( 'squad' ).relatedTo( currentUser ).first() %}
 		<h1>Welcome back {{ currentUser.firstName }}</h1>
 		<h2>Your team:</h2>
-		{{ playersByPosition( currentSquad.goalkeepers, 'Goalkeepers' )}}
-		{{ playersByPosition( currentSquad.defenders, 'Defenders' )}}
-		{{ playersByPosition( currentSquad.midfielders, 'Midfielders' )}}
-		{{ playersByPosition( currentSquad.forwards, 'Forwards' )}}
-		{{ playersByPosition( currentSquad.bench, 'Bench' )}}
+		{{ playersByPosition( currentSquad.goalkeepers, 'Goalkeepers' ) }}
+		{{ playersByPosition( currentSquad.defenders, 'Defenders' ) }}
+		{{ playersByPosition( currentSquad.midfielders, 'Midfielders' ) }}
+		{{ playersByPosition( currentSquad.forwards, 'Forwards' ) }}
+		{{ playersByPosition( currentSquad.bench, 'Bench' ) }}
 	{% else %}
 		<form class="form" method="POST" accept-charset="UTF-8">
 			{{ getCsrfInput() }}
