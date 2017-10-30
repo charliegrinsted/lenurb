@@ -1,0 +1,41 @@
+{% if currentUser %}
+{% from '_macros' import image, playersByPositionAsInputs %}
+{% set page_title = 'Le Nurb League' %}
+{% extends '_base' %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col a6-12">
+			{% set currentSquad = craft.entries.section( 'squad' ).relatedTo( currentUser ).first() %}
+			<h1>Welcome back {{ currentUser.firstName }}</h1>
+			<h2>Your team:</h2>
+			<div id="lineup-choices" class="lineup__choices">
+				{{ playersByPositionAsInputs( currentSquad.goalkeepers ) }}
+				{{ playersByPositionAsInputs( currentSquad.defenders ) }}
+				{{ playersByPositionAsInputs( currentSquad.midfielders ) }}
+				{{ playersByPositionAsInputs( currentSquad.forwards ) }}
+				{{ playersByPositionAsInputs( currentSquad.bench ) }}
+			</div>
+		</div>
+		<div class="col a6-12">
+			<p>{{ status.currentGameweek[0].title }} Lineup</p>
+		<form method="POST" accept-charset="UTF-8" action="">
+			{{ getCsrfInput() }}
+			<div id="lineup-pending" class="lineup__pending"></div>
+			<input type="hidden" name="action" value="leNurb/lineup/updateLineup">
+			<button type="submit">Submit lineup</button>
+		</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="{{ craft.config.environmentVariables['assetsUrl'] }}js/dragula.min.js"></script>
+<script>
+	dragula( [document.getElementById( 'lineup-choices' ), document.getElementById( 'lineup-pending' )] );
+</script>
+{% endblock %}
+{% else %}
+	{% exit 404 %}
+{% endif %}

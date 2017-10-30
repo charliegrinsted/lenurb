@@ -15,9 +15,6 @@
 	<div class="row">
 		{% for player in players %}
 			<div class="col a3-12 b4-12 c6-12">
-				{% if player.profilePhoto|length %}
-					{{ utils.image( player.profilePhoto[0], 'profilePhoto', player.title ) }}
-				{% endif %}
 				<p class="p"><a href="{{ player.url }}">{{ player.title }}</a> - {{ player.totalPoints }}</p>
 				{% if currentUser %}
 					{% if player.currentOwner|length == 0 %}
@@ -25,18 +22,27 @@
 							{{ getCsrfInput() }}
 							<input type="hidden" name="action" value="leNurb/draft/draftPlayerIntoSquad">
 							<input type="hidden" name="playerId" value="{{ player.slug }}">
-							<button type="submit">Draft this player</button>
+							<button type="submit">Draft</button>
 						</form>
 					{% elseif player.currentOwner[0].id == currentUser.id %}
 						<form method="POST" accept-charset="UTF-8" action="">
 							{{ getCsrfInput() }}
 							<input type="hidden" name="action" value="leNurb/draft/releasePlayerFromSquad">
 							<input type="hidden" name="playerId" value="{{ player.slug }}">
-							<button type="submit">Release this player</button>
+							<button type="submit">Release</button>
 						</form>
 					{% endif %}
 				{% endif %}
 			</div>
 		{% endfor %}
 	</div>
+{%- endmacro %}
+
+{% macro playersByPositionAsInputs( players ) -%}
+	{% for player in players %}
+		<div class="lineup__player">
+			<label class="form__label" for="{{ player.id }}">{{ player.title }}</label>
+			<input type="hidden" id="{{ player.id }}" name="{{ player.id }}" value="{{ player.slug }}">
+		</div>
+	{% endfor %}
 {%- endmacro %}

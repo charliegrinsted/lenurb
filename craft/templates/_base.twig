@@ -44,9 +44,9 @@
 			{% set site_area = craft.request.firstSegment %}
 			{% set navigation = {
 				'home': 'Home',
-				'stats/teams/': 'Teams',
+				'lineup': 'Lineup',
+				'stats/teams': 'Teams',
 				'stats/players': 'Players',
-				'logout': 'Logout',
 			} %}
 			{% for slug, label in navigation %}
 				<li{{ ( site_area == slug ) or ( site_area == '' and slug == 'home' ) ? ' class="selected"' }}><a href="{{ url( ( slug == 'home' ? '' : slug ) ) }}">{{ label }}</a></li>
