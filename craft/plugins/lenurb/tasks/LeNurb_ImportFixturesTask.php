@@ -2,7 +2,7 @@
 /**
  * Le Nurb League plugin for Craft CMS
  *
- * Le Nurb Import Task
+ * Le Nurb Import Fixtures Task
  *
  * @author    Charlie Grinsted
  * @copyright Copyright (c) 2017 Charlie Grinsted
@@ -12,26 +12,26 @@
 
 namespace Craft;
 
-class LeNurb_ImportTask extends BaseTask
+class LeNurb_ImportFixturesTask extends BaseTask
 {
 	private $allApiData = [];
 
 	public function getDescription()
 	{
-		return 'Importing players';
+		return 'Importing fixtures';
 	}
 
 	public function getTotalSteps()
 	{
-		$this->allApiData = craft()->leNurb_import->getAllPlayerData();
-		return count( $this->allApiData['elements'] );
+		$this->allApiData = craft()->leNurb_import->getAllFixtureData();
+		return count( $this->allApiData );
 	}
 
 	public function runStep($step)
 	{
-        $player = $this->allApiData['elements'][$step];
+        $fixture = $this->allApiData[$step];
         try {
-            return craft()->leNurb_import->createPlayerEntry($player, 3);
+            return craft()->leNurb_import->createFixtureEntry($fixture, 9);
         } catch (\Exception $e) {
             return false;
         }

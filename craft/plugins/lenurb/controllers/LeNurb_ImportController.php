@@ -18,6 +18,13 @@ class LeNurb_ImportController extends BaseController
 
     public function actionImportAllPlayers()
     {
-        craft()->tasks->createTask('LeNurb_Import', Craft::t('Importing players'));
+        craft()->tasks->createTask('LeNurb_ImportPlayers', Craft::t('Importing players'));
+    }
+
+    public function actionImportAllFixtures()
+    {
+        craft()->tasks->createTask('LeNurb_ImportFixtures', Craft::t('Importing fixtures'));
+    }
+
     }
 }

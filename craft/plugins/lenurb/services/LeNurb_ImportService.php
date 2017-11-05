@@ -36,6 +36,28 @@ class LeNurb_ImportService extends BaseApplicationComponent
         }
     }
 
+    public function getAllFixtureData()
+    {
+        $url = 'https://fantasy.premierleague.com/drf/fixtures';
+        $cachedResponse = craft()->fileCache->get($url);
+        if ($cachedResponse) {
+            return $cachedResponse;
+        }
+        try {
+            $client = new \Guzzle\Http\Client();
+            $request = $client->get($url);
+            $response = $request->send();
+            if (!$response->isSuccessful()) {
+                return;
+            }
+            $items = $response->json();
+            craft()->fileCache->set($url, $items);
+            return $items;
+        } catch(\Exception $e) {
+            return;
+        }
+    }
+
     public function downloadPlayerPhoto($playerId)
     {
         $fileName = $playerId . '.png';
@@ -60,6 +82,41 @@ class LeNurb_ImportService extends BaseApplicationComponent
         return (int)$oAssetOperationResponse->responseData["fileId"];
     }
 
+
+    public function createFixtureEntry($fixtureData, $sectionId)
+    {
+        $criteria = craft()->elements->getCriteria(ElementType::Entry);
+        $criteria->sectionId = $sectionId;
+        $criteria->slug = $fixtureData['id'];
+        $existingFixture = $criteria->first();
+        if ($existingFixture) {
+            return true;
+        }
+        $entry = new EntryModel();
+        $entry->slug = $fixtureData['id'];
+        $entry->sectionId = $sectionId;
+        $homeTeam = craft()->leNurb_import->getTeamFromCraft($fixtureData['team_h']);
+        $awayTeam = craft()->leNurb_import->getTeamFromCraft($fixtureData['team_a']);
+        $entry->getContent()->setAttributes(array(
+            'title' => ($homeTeam->title . ' v ' . $awayTeam->title),
+            'postDate' => $fixtureData['kickoff_time'],
+            'homeTeam' => array(
+                $homeTeam->id
+            ),
+            'awayTeam' => array(
+                $awayTeam->id
+            ),
+        ));
+        craft()->entries->saveEntry($entry);
+        return true;
+    }
+
+    public function getTeamFromCraft($teamFPLid)
+    {
+        $team = craft()->elements->getCriteria(ElementType::Entry);
+        $team->fplId = $teamFPLid;
+        return $team->first();
+    }
 
     public function createPlayerEntry($playerData, $sectionId)
     {
@@ -92,14 +149,12 @@ class LeNurb_ImportService extends BaseApplicationComponent
                 break;
         }
         $entry->slug = $playerData['id'];
-        $team = craft()->elements->getCriteria(ElementType::Entry);
-        $team->fplId = $playerData['team'];
-        $teamToAssign = $team->first();
+        $team = craft()->leNurb_import->getTeamFromCraft($playerData['team']);
         $entry->getContent()->setAttributes(array(
             'title' => ($playerData['web_name']),
             'fullName' => ($playerData['first_name'] . ' ' . $playerData['second_name']),
             'currentTeam' => array(
-                $teamToAssign->id
+                $team->id
             ),
             'totalPoints' => ($playerData['total_points']),
         ));

@@ -8,4 +8,10 @@
 	<input type="hidden" name="action" value="leNurb/import/importAllPlayers">
 	<button type="submit">Import players</button>
 </form>
+<br>
+<form method="POST" accept-charset="UTF-8" action="">
+	{{ getCsrfInput() }}
+	<input type="hidden" name="action" value="leNurb/import/importAllFixtures">
+	<button type="submit">Import fixtures</button>
+</form>
 {% endset %}
