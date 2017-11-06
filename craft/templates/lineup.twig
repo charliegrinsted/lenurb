@@ -19,13 +19,15 @@
 			</div>
 		</div>
 		<div class="col a6-12">
-			<p>{{ status.currentGameweek[0].title }} Lineup</p>
-		<form method="POST" accept-charset="UTF-8" action="">
-			{{ getCsrfInput() }}
-			<div id="lineup-pending" class="lineup__pending"></div>
-			<input type="hidden" name="action" value="leNurb/lineup/updateLineup">
-			<button type="submit">Submit lineup</button>
-		</form>
+			{% if status.currentGameweek|length %}
+				<p>{{ status.currentGameweek[0].title }} Lineup</p>
+			{% endif %}
+			<form method="POST" accept-charset="UTF-8" action="">
+				{{ getCsrfInput() }}
+				<div id="lineup-pending" class="lineup__pending"></div>
+				<input type="hidden" name="action" value="leNurb/lineup/updateLineup">
+				<button type="submit">Submit lineup</button>
+			</form>
 		</div>
 	</div>
 </div>

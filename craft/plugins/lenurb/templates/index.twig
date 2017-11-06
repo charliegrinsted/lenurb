@@ -11,7 +11,19 @@
 <br>
 <form method="POST" accept-charset="UTF-8" action="">
 	{{ getCsrfInput() }}
+	<input type="hidden" name="action" value="leNurb/import/importAllGameweeks">
+	<button type="submit">Import gameweeks</button>
+</form>
+<br>
+<form method="POST" accept-charset="UTF-8" action="">
+	{{ getCsrfInput() }}
 	<input type="hidden" name="action" value="leNurb/import/importAllFixtures">
 	<button type="submit">Import fixtures</button>
+</form>
+<br>
+<form method="POST" accept-charset="UTF-8" action="">
+	{{ getCsrfInput() }}
+	<input type="hidden" name="action" value="leNurb/import/deleteAllFixtures">
+	<button type="submit">Delete fixtures</button>
 </form>
 {% endset %}

@@ -3,5 +3,8 @@
 {% block content %}
 <div class="container">
 	<h1>Gameweeks</h1>
+	{% for gw in craft.entries.section( 'gameweek' ).order( 'gameweekDeadline asc' ) %}
+		<p><a href="{{ gw.url }}">{{ gw.title }}</a></p>
+	{% endfor %}
 </div>
 {% endblock %}
