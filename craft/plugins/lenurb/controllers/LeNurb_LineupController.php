@@ -20,8 +20,17 @@ class LeNurb_LineupController extends BaseController
     {
     	$this->requirePostRequest();
         $submittedLineup = craft()->request->getPost();
-        die(var_export($submittedLineup));
-        // craft()->leNurb_draft->assignPlayerToParticipant($playerId);
+        $playerIDsToAdd = [];
+		foreach ($submittedLineup as $key => $val) {
+			if (is_int($key)) {
+        		// FEATURE REQUEST check that each player is valid and the whole lineup is legit
+				$playerIDsToAdd[] = $val;
+			}
+		}
+        if (count($playerIDsToAdd) != 11) {
+            die('not 11 players');
+        } else {
+            craft()->leNurb_lineup->saveParticipantLineup($playerIDsToAdd);
+        }
     }
-
 }

@@ -55,7 +55,7 @@ class LeNurb_DraftService extends BaseApplicationComponent
             $playerToRelease->getContent()->setAttribute('currentOwner', []);
             craft()->entries->saveEntry($playerToRelease);
         }
-        $participantSquad = craft()->leNurb_draft->getParticipantSquad($participant);
+        $participantSquad = craft()->leNurb_helpers->getParticipantSquad($participant);
         switch ($playerToRelease->typeId) {
         case 3:
             $playerType = 'goalkeepers';
@@ -104,7 +104,7 @@ class LeNurb_DraftService extends BaseApplicationComponent
 
     private function addPlayerToParticipantRosterSlots($player, $participant)
     {
-        $participantSquad = craft()->leNurb_draft->getParticipantSquad($participant);
+        $participantSquad = craft()->leNurb_helpers->getParticipantSquad($participant);
         switch ($player->typeId) {
         case 3:
             $playerType = 'goalkeepers';
@@ -150,12 +150,4 @@ class LeNurb_DraftService extends BaseApplicationComponent
         }
     }
 
-    private function getParticipantSquad($participant)
-    {
-        $criteria = craft()->elements->getCriteria(ElementType::Entry);
-        $criteria->sectionId = 5;
-        $criteria->relatedTo = $participant;
-        $participantSquad = $criteria->first();
-        return $participantSquad;
-    }
 }

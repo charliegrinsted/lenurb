@@ -26,5 +26,21 @@ class LeNurb_ImportController extends BaseController
         craft()->tasks->createTask('LeNurb_ImportFixtures', Craft::t('Importing fixtures'));
     }
 
+    public function actionImportAllGameweeks()
+    {
+        craft()->tasks->createTask('LeNurb_ImportGameweeks', Craft::t('Importing gameweeks'));
+    }
+
+    public function actionDeleteAllFixtures()
+    {
+        $elementIds = craft()->db->createCommand()->select('id')
+            ->from('entries')
+            ->where('sectionId = :sectionId', array(':sectionId' => 9))
+            ->queryColumn();
+        $rowsAffected = craft()->db->createCommand()->delete(
+           'elements',
+            array('in', 'id', $elementIds)
+        );
+    }
     }
 }
