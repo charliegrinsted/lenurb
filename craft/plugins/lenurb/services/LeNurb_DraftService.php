@@ -20,6 +20,7 @@ class LeNurb_DraftService extends BaseApplicationComponent
         $participant = craft()->userSession->getUser();
         if ($participant && $participant->isInGroup('participants')) {
             $entry = craft()->elements->getCriteria(ElementType::Entry);
+            $entry->sectionId = 3;
             $entry->slug = $playerId;
             $playerToAssign = $entry->first();
             if ($playerToAssign) {
@@ -48,6 +49,7 @@ class LeNurb_DraftService extends BaseApplicationComponent
         $participant = craft()->userSession->getUser();
         if ($participant && $participant->isInGroup('participants')) {
             $entry = craft()->elements->getCriteria(ElementType::Entry);
+            $entry->sectionId = 3;
             $entry->slug = $playerId;
             $playerToRelease = $entry->first();
             $playerToRelease->getContent()->setAttribute('currentOwner', []);
