@@ -120,7 +120,7 @@ class LeNurb_LineupService extends BaseApplicationComponent
         $midfielders = [];
         $forwards = [];
         foreach ($lineup as $player) {
-            $playerToSort = craft()->leNurb_helpers->getPlayerFromCraft($player);
+            $playerToSort = craft()->leNurb_helpers->getPlayerFromCraftAndCheckOwnership($player, $participant);
             switch ($playerToSort->typeId) {
             case 3:
                 $goalkeeper[] = $playerToSort->id;
