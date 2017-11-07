@@ -54,6 +54,15 @@ class LeNurb_HelpersService extends BaseApplicationComponent
         return $player->first();
     }
 
+    public function getPlayerFromCraftAndCheckOwnership($playerId, $participant)
+    {
+        $player = craft()->elements->getCriteria(ElementType::Entry);
+        $player->sectionId = 3;
+        $player->relatedTo = $participant;
+        $player->slug = $playerId;
+        return $player->first();
+    }
+
     public function getTeamFromCraft($teamFPLid)
     {
         $team = craft()->elements->getCriteria(ElementType::Entry);
