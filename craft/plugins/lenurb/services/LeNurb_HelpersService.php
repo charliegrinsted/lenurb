@@ -79,6 +79,25 @@ class LeNurb_HelpersService extends BaseApplicationComponent
         return $gameweek->first();
     }
 
+    public function getAllGameweeksFromCraft()
+    {
+        $gameweeks = craft()->elements->getCriteria(ElementType::Entry);
+        $gameweeks->sectionId = 8;
+        return $gameweeks->find();
+    }
+
+    public function getAllParticipantIDs()
+    {
+        $participantsToReturn = [];
+        $participants = craft()->elements->getCriteria(ElementType::User);
+        $participants->affiliateGroup = 'participants';
+        $participantsToLoop = $participants->find();
+        foreach ($participantsToLoop as $participant) {
+           $participantsToReturn[] = $participant->id;
+        }
+        return $participantsToReturn;
+    }
+
     public function getCurrentGameweek()
     {
         $status = craft()->globals->getSetByHandle('status');
