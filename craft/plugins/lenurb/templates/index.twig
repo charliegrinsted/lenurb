@@ -17,13 +17,19 @@
 <br>
 <form method="POST" accept-charset="UTF-8" action="">
 	{{ getCsrfInput() }}
-	<input type="hidden" name="action" value="leNurb/import/importAllFixtures">
-	<button type="submit">Import fixtures</button>
+	<input type="hidden" name="action" value="leNurb/import/importAllRealFixtures">
+	<button type="submit">Import real-life fixtures</button>
 </form>
 <br>
 <form method="POST" accept-charset="UTF-8" action="">
 	{{ getCsrfInput() }}
-	<input type="hidden" name="action" value="leNurb/import/deleteAllFixtures">
-	<button type="submit">Delete fixtures</button>
+	<input type="hidden" name="action" value="leNurb/import/deleteAllRealFixtures">
+	<button type="submit">Delete real-life fixtures</button>
+</form>
+<br>
+<form method="POST" accept-charset="UTF-8" action="">
+	{{ getCsrfInput() }}
+	<input type="hidden" name="action" value="leNurb/import/generateParticipantFixtures">
+	<button type="submit">Generate participant fixtures</button>
 </form>
 {% endset %}

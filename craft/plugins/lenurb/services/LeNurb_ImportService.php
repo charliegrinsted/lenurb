@@ -32,6 +32,66 @@ class LeNurb_ImportService extends BaseApplicationComponent
         return craft()->leNurb_helpers->getJSONwithGuzzle($url);
     }
 
+    private function getMatrixTypeId($handle)
+    {
+        $matrix = craft()->fields->getFieldByHandle($handle);
+        $matrixBlocks = craft()->matrix->getBlockTypesByFieldId($matrix->id);
+        $matrixTypeId = $matrixBlocks[0]->id;
+        return $matrixTypeId;
+    }
+
+    private function getMatrixFieldId($handle)
+    {
+        $matrix = craft()->fields->getFieldByHandle($handle);
+        return $matrix->id;
+    }
+
+    public function createAllParticipantFixtures()
+    {
+        $allGameweeks = craft()->leNurb_helpers->getAllGameweeksFromCraft();
+        $allParticipants = craft()->leNurb_helpers->getAllParticipantIDs();
+        $away = array_splice($allParticipants, (count($allParticipants) / 2));
+        $home = $allParticipants;
+        $totalWeeks = ( count($allGameweeks) - 3 );
+        $allFixtures = [];
+        for ($i = 0; $i < $totalWeeks; $i++) {
+            for ($j = 0; $j < count($home); $j++){
+                $allFixtures[$i][] = [$home[$j], $away[$j], $allGameweeks[$i]->id];
+            }
+            if(count($home)+count($away)-1 > 2){
+                array_unshift($away, current(array_splice($home,1,1)));
+                array_push($home,array_pop($away));
+            }
+        }
+        return $allFixtures;
+    }
+
+    public function createParticipantFixtureBlocks($data)
+    {
+        $matrixFieldId = craft()->leNurb_import->getMatrixFieldId('gameweekFixtures');
+        $matrixTypeId = craft()->leNurb_import->getMatrixTypeId('gameweekFixtures');
+        LeNurbPlugin::log('Fixture total is ' . count($data));
+        for ($i = 0; $i < count($data); $i++) {
+            LeNurbPlugin::log($data[$i][0] . ' vs ' . $data[$i][1] . ' in GW ' . $data[$i][2]);
+            $block = new MatrixBlockModel();
+            $block->fieldId = $matrixFieldId;
+            $block->typeId = $matrixTypeId;
+            $block->ownerId = $data[$i][2];
+            LeNurbPlugin::log('No errors yet 1');
+            $block->getContent()->setAttributes(array(
+                'home' => array(
+                    $data[$i][0]
+                ),
+                'away' => array(
+                    $data[$i][1]
+                )
+            ));
+            LeNurbPlugin::log('No errors yet 2');
+            $success = craft()->matrix->saveBlock($block, false);
+            LeNurbPlugin::log('No errors yet 3');
+        }
+        return true;
+    }
 
     public function createFixtureEntry($fixtureData, $sectionId)
     {
