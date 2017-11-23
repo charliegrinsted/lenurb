@@ -8,6 +8,5 @@
 		<p>{{ fixture.home[0].username }} v {{ fixture.away[0].username }}</p>
 	{% endfor %}
 	{% set lineups = craft.entries.section( 'lineups' ).relatedTo( entry ) %}
-	{{ lineups|length }}
 </div>
 {% endblock %}
