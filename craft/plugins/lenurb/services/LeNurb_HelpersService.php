@@ -83,6 +83,7 @@ class LeNurb_HelpersService extends BaseApplicationComponent
     {
         $gameweeks = craft()->elements->getCriteria(ElementType::Entry);
         $gameweeks->sectionId = 8;
+        $gameweeks->order = 'gameweekDeadline asc';
         return $gameweeks->find();
     }
 
@@ -103,4 +104,19 @@ class LeNurb_HelpersService extends BaseApplicationComponent
         $status = craft()->globals->getSetByHandle('status');
         return $status->currentGameweek[0];
     }
+
+    public function getMatrixTypeId($handle)
+    {
+        $matrix = craft()->fields->getFieldByHandle($handle);
+        $matrixBlocks = craft()->matrix->getBlockTypesByFieldId($matrix->id);
+        $matrixTypeId = $matrixBlocks[0]->id;
+        return $matrixTypeId;
+    }
+
+    public function getMatrixFieldId($handle)
+    {
+        $matrix = craft()->fields->getFieldByHandle($handle);
+        return $matrix->id;
+    }
+
 }

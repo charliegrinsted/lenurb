@@ -32,18 +32,7 @@ class LeNurb_ImportService extends BaseApplicationComponent
         return craft()->leNurb_helpers->getJSONwithGuzzle($url);
     }
 
-    private function getMatrixTypeId($handle)
     {
-        $matrix = craft()->fields->getFieldByHandle($handle);
-        $matrixBlocks = craft()->matrix->getBlockTypesByFieldId($matrix->id);
-        $matrixTypeId = $matrixBlocks[0]->id;
-        return $matrixTypeId;
-    }
-
-    private function getMatrixFieldId($handle)
-    {
-        $matrix = craft()->fields->getFieldByHandle($handle);
-        return $matrix->id;
     }
 
     public function createAllParticipantFixtures()
@@ -68,8 +57,8 @@ class LeNurb_ImportService extends BaseApplicationComponent
 
     public function createParticipantFixtureBlocks($data)
     {
-        $matrixFieldId = craft()->leNurb_import->getMatrixFieldId('gameweekFixtures');
-        $matrixTypeId = craft()->leNurb_import->getMatrixTypeId('gameweekFixtures');
+        $matrixFieldId = craft()->leNurb_helpers->getMatrixFieldId('gameweekFixtures');
+        $matrixTypeId = craft()->leNurb_helpers->getMatrixTypeId('gameweekFixtures');
         LeNurbPlugin::log('Fixture total is ' . count($data));
         for ($i = 0; $i < count($data); $i++) {
             LeNurbPlugin::log($data[$i][0] . ' vs ' . $data[$i][1] . ' in GW ' . $data[$i][2]);
